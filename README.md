@@ -3,7 +3,7 @@
 
 - customize email template by event
 - delete job in History page
-- shell plugin set "/description" by echo "#message" before exit with status
+- shell plugin set variable "description" putting echo "#description" before exit with status
 
 # Overview
 
