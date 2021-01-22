@@ -28,6 +28,7 @@ stream.on('json', function(job) {
 	
 	var kill_timer = null;
 	var stderr_buffer = '';
+        var shell_exit_status = '';
 	
 	var cstream = new JSONStream( child.stdout, child.stdin );
 	cstream.recordRegExp = /^\s*\{.+\}\s*$/;
@@ -48,6 +49,11 @@ stream.on('json', function(job) {
 			});
 		}
 		else {
+   // fs.appendFileSync(job.log_file, 'match ' + line.match(/^#(.*)$/));
+   if (line.match(/^\s*#(.*)\s*$/)) {
+		  shell_exit_status = RegExp.$1;
+			}
+
 			// otherwise just log it
 			if (job.params.annotate) {
 				var dargs = Tools.getDateArgs( new Date() );
@@ -77,11 +83,20 @@ stream.on('json', function(job) {
 		// child exited
 		if (kill_timer) clearTimeout(kill_timer);
 		code = (code || signal || 0);
-		
+	
+  var jobDescr = '';
+  if (shell_exit_status) {
+   jobDescr = code ? ("Error " + shell_exit_status) : "";                       } 
+  else {
+   jobDescr = code ? ("Script exited with code: " + code) : "";
+  }
+
+		fs.appendFileSync(job.log_file, "****** " + jobDescr);
+
 		var data = {
 			complete: 1,
 			code: code,
-			description: code ? ("Script exited with code: " + code) : ""
+			description: jobDescr
 		};
 		
 		if (stderr_buffer.length && stderr_buffer.match(/\S/)) {
