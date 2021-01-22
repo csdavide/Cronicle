@@ -2,7 +2,7 @@
 # Fork Changes
 
 - customize email template by event
-- delete job in history
+- delete job in History page
 - shell plugin set "/description" by echo "#message" before exit with status
 
 # Overview
