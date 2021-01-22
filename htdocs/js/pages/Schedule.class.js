@@ -920,14 +920,14 @@ Class.subclass( Page.Base, "Page.Schedule", {
 			'<div style="font-size:13px;'+(notif_expanded ? 'display:none;' : '')+'"><span class="link addme" onMouseUp="$P().expand_fieldset($(this))"><i class="fa fa-plus-square-o">&nbsp;</i>Notification Options</span></div>' + 
 			'<fieldset style="padding:10px 10px 0 10px; margin-bottom:5px;'+(notif_expanded ? '' : 'display:none;')+'"><legend class="link addme" onMouseUp="$P().collapse_fieldset($(this))"><i class="fa fa-minus-square-o">&nbsp;</i>Notification Options</legend>' + 
 
-	  '<div class="plugin_params_label">Email Template Dir:</div>' + 
-				'<div class="plugin_params_content"><input type="text" id="fe_ee_notify_template" size="50" value="'+escape_text_field_value(event.1)+'"   spellcheck="false" placeholder="conf/emails" /></div>' + 
+    '<div class="plugin_params_label">Email Template Dir:</div>' + 
+				'<div class="plugin_params_content"><input type="text" id="fe_ee_notify_template" size="50" value="'+escape_text_field_value(event.notify_template)+'" spellcheck="false" placeholder="conf/emails" /></div>' + 
 
 				'<div class="plugin_params_label">Email on Success:</div>' + 
-				'<div class="plugin_params_content"><input type="text" id="fe_ee_notify_success" size="50" value="'+escape_text_field_value(event.notify_success)+'" placeholder="email@sample.com" spellcheck="false" onChange="$P().update_add_remove_me($(this))"/><span class="link addme" onMouseUp="$P().add_remove_me($(this).prev())"></span></div>' + 
+				'<div class="plugin_params_content"><input type="text" id="fe_ee_notify_success" size="50" value="'+escape_text_field_value(event.notify_success)+'" placeholder="your.email@sample.com" spellcheck="false" onChange="$P().update_add_remove_me($(this))"/><span class="link addme" onMouseUp="$P().add_remove_me($(this).prev())"></span></div>' + 
 				
 				'<div class="plugin_params_label">Email on Failure:</div>' + 
-				'<div class="plugin_params_content"><input type="text" id="fe_ee_notify_fail" size="50" value="'+escape_text_field_value(event.notify_fail)+'" placeholder="email@sample.com" spellcheck="false" onChange="$P().update_add_remove_me($(this))"/><span class="link addme" onMouseUp="$P().add_remove_me($(this).prev())"></span></div>' + 
+				'<div class="plugin_params_content"><input type="text" id="fe_ee_notify_fail" size="50" value="'+escape_text_field_value(event.notify_fail)+'" placeholder="your.email@sample.com" spellcheck="false" onChange="$P().update_add_remove_me($(this))"/><span class="link addme" onMouseUp="$P().add_remove_me($(this).prev())"></span></div>' + 
 				
 				'<div class="plugin_params_label">Web Hook URL:</div>' + 
 				'<div class="plugin_params_content"><input type="text" id="fe_ee_web_hook" size="60" value="'+escape_text_field_value(event.web_hook)+'" placeholder="http://" spellcheck="false"/></div>' + 
@@ -1108,6 +1108,7 @@ Class.subclass( Page.Base, "Page.Schedule", {
 				category.max_children = 0;
 				category.notify_success = '';
 				category.notify_fail = '';
+	  	category.notify_template = '';
 				category.web_hook = '';
 				category.enabled = 1;
 				

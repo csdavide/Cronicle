@@ -27,6 +27,21 @@ Class.subclass( Page.Base, "Page.History", {
 		
 		return true;
 	},
+
+ delete_job: function(jobId) {
+		var self = this;	
+		
+		app.confirm( '<span style="color:red">Delete Job</span>', "Are you sure you want to delete the current job log and history?", "Delete", function(result) {
+			if (result) {
+				app.showProgress( 1.0, "Deleting job..." );
+				app.api.post( 'app/delete_job', { id: jobId }, function(resp) {
+					app.hideProgress();
+					app.showMessage('success', "Job ID '"+jobId+"' was deleted successfully.");
+     $('#'+jobId).parent().parent().remove();
+				} );
+			}
+		} );
+	},
 	
 	gosub_history: function(args) {
 		// show history
@@ -105,7 +120,11 @@ Class.subclass( Page.Base, "Page.History", {
 			if (!plugin && job.plugin_title) plugin = { id: job.plugin, title: job.plugin_title };
 			
 			var job_link = '<div class="td_big">--</div>';
-			if (job.id) job_link = '<div class="td_big"><a href="#JobDetails?id='+job.id+'">' + self.getNiceJob('<b>' + job.id + '</b>') + '</a></div>';
+			if (job.id) job_link = '<div class="td_big" id="'+job.id+'"><a href="#JobDetails?id='+job.id+'">' + self.getNiceJob('<b>' + job.id + '</b>') + '</a></div>'; 
+
+   var del_job = '<div class="subtitle_widget">';
+  	if (job.id) del_job += '<span class="link abort" onMouseUp="$P().delete_job(\''+job.id+'\')"><i class="fa fa-trash-o">&nbsp;</i><b>Delete</b></span>';
+   del_job += '</div>';
 			
 			var tds = [
 				job_link,
@@ -116,8 +135,7 @@ Class.subclass( Page.Base, "Page.History", {
 				(job.code == 0) ? '<span class="color_label green"><i class="fa fa-check">&nbsp;</i>Success</span>' : '<span class="color_label red"><i class="fa fa-warning">&nbsp;</i>Error</span>',
 				get_nice_date_time( job.time_start, false, true ),
 				get_text_from_seconds( job.elapsed, true, false ),
-    '<div class="subtitle_widget"><span class="link abort" onMouseUp="$P().delete_item(this)"><i class="fa fa-trash-o">&nbsp;</i><b>Delete</b></span></div>'
-				// actions.join(' | ')
+    del_job
 			];
 			
 			if (!job.id) tds.className = 'disabled';
