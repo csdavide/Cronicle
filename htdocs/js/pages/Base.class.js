@@ -54,21 +54,7 @@ Class.subclass( Page, "Page.Base", {
 		return( app.user && app.user.privileges && app.user.privileges.admin );
 	},
 
- delete_item: function(job) {
-		app.confirm( '<span style="color:red">Delete Job</span>', "Are you sure you want to delete the current job log and history?", "Delete",    function(result) {
-			if (result) {
-				app.showProgress( 1.0, "Deleting job..." );
-				app.api.post( 'app/delete_job', job, function(resp) {
-					app.hideProgress();
-					app.showMessage('success', "Job ID '"+job.id+"' was deleted successfully.");
-					$('#tab_History').trigger('click');
-					this.tab.hide();
-				} );
-			}
-		} );
-	},
-	
-	getNiceJob: function(id) {
+ 	getNiceJob: function(id) {
 		if (!id) return '(None)';
 		if (typeof(id) == 'object') id = id.id;
 		return '<div style="white-space:nowrap;"><i class="fa fa-pie-chart">&nbsp;</i>' + id + '</div>';
