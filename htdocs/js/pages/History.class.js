@@ -74,7 +74,7 @@ Class.subclass( Page.Base, "Page.History", {
 		this.events = [];
 		if (resp.rows) this.events = resp.rows;
 		
-		var cols = ['Job ID', 'Event Name', 'Category', 'Plugin', 'Hostname', 'Result', 'Start Date/Time', 'Elapsed Time'];
+		var cols = ['Job ID', 'Event Name', 'Category', 'Plugin', 'Hostname', 'Result', 'Start Date/Time', 'Elapsed Time', 'Action'];
 		
 		var self = this;
 		var num_visible_items = 0;
@@ -115,7 +115,8 @@ Class.subclass( Page.Base, "Page.History", {
 				self.getNiceGroup( null, job.hostname, col_width ),
 				(job.code == 0) ? '<span class="color_label green"><i class="fa fa-check">&nbsp;</i>Success</span>' : '<span class="color_label red"><i class="fa fa-warning">&nbsp;</i>Error</span>',
 				get_nice_date_time( job.time_start, false, true ),
-				get_text_from_seconds( job.elapsed, true, false )
+				get_text_from_seconds( job.elapsed, true, false ),
+    '<div class="subtitle_widget"><span class="link abort" onMouseUp="$P().delete_item(this)"><i class="fa fa-trash-o">&nbsp;</i><b>Delete</b></span></div>'
 				// actions.join(' | ')
 			];
 			

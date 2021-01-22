@@ -634,7 +634,7 @@ Class.subclass( Page.Base, "Page.Schedule", {
 			// if certain key properties were changed and event has active jobs, ask user to update them
 			var need_update = false;
 			var updates = {};
-			var keys = ['title', 'timeout', 'retries', 'retry_delay', 'chain', 'chain_error', 'notify_success', 'notify_fail', 'web_hook', 'cpu_limit', 'cpu_sustain', 'memory_limit', 'memory_sustain', 'log_max_size'];
+			var keys = ['title', 'timeout', 'retries', 'retry_delay', 'chain', 'chain_error', 'notify_template', 'notify_success', 'notify_fail', 'web_hook', 'cpu_limit', 'cpu_sustain', 'memory_limit', 'memory_sustain', 'log_max_size'];
 			
 			for (var idx = 0, len = keys.length; idx < len; idx++) {
 				var key = keys[idx];
@@ -915,10 +915,14 @@ Class.subclass( Page.Base, "Page.Schedule", {
 		html += get_form_table_spacer();
 		
 		// notification
-		var notif_expanded = !!(event.notify_success || event.notify_fail || event.web_hook);
+		var notif_expanded = !!(event.notify_template || event.notify_success || event.notify_fail || event.web_hook);
 		html += get_form_table_row( 'Notification', 
 			'<div style="font-size:13px;'+(notif_expanded ? 'display:none;' : '')+'"><span class="link addme" onMouseUp="$P().expand_fieldset($(this))"><i class="fa fa-plus-square-o">&nbsp;</i>Notification Options</span></div>' + 
 			'<fieldset style="padding:10px 10px 0 10px; margin-bottom:5px;'+(notif_expanded ? '' : 'display:none;')+'"><legend class="link addme" onMouseUp="$P().collapse_fieldset($(this))"><i class="fa fa-minus-square-o">&nbsp;</i>Notification Options</legend>' + 
+
+	  '<div class="plugin_params_label">Email Template Dir:</div>' + 
+				'<div class="plugin_params_content"><input type="text" id="fe_ee_notify_template" size="50" value="'+escape_text_field_value(event.1)+'"   spellcheck="false" placeholder="conf/emails" /></div>' + 
+
 				'<div class="plugin_params_label">Email on Success:</div>' + 
 				'<div class="plugin_params_content"><input type="text" id="fe_ee_notify_success" size="50" value="'+escape_text_field_value(event.notify_success)+'" placeholder="email@sample.com" spellcheck="false" onChange="$P().update_add_remove_me($(this))"/><span class="link addme" onMouseUp="$P().add_remove_me($(this).prev())"></span></div>' + 
 				
@@ -1718,6 +1722,7 @@ Class.subclass( Page.Base, "Page.Schedule", {
 		// notification
 		event.notify_success = $('#fe_ee_notify_success').val();
 		event.notify_fail = $('#fe_ee_notify_fail').val();
+  event.notify_template = $('#fe_ee_notify_template').val();
 		event.web_hook = $('#fe_ee_web_hook').val();
 		
 		// cpu limit
