@@ -364,10 +364,14 @@ Class.add( Page.Admin, {
 		html += get_form_table_spacer();
 		
 		// default notification options
-		var notif_expanded = !!(cat.notify_success || cat.notify_fail || cat.web_hook);
+		var notif_expanded = !!(cat.notify_template || cat.notify_success || cat.notify_fail || cat.web_hook);
 		html += get_form_table_row( 'Notification', 
 			'<div style="font-size:13px;'+(notif_expanded ? 'display:none;' : '')+'"><span class="link addme" onMouseUp="$P().expand_fieldset($(this))"><i class="fa fa-plus-square-o">&nbsp;</i>Default Notification Options</span></div>' + 
 			'<fieldset style="padding:10px 10px 0 10px; margin-bottom:5px;'+(notif_expanded ? '' : 'display:none;')+'"><legend class="link addme" onMouseUp="$P().collapse_fieldset($(this))"><i class="fa fa-minus-square-o">&nbsp;</i>Default Notification Options</legend>' + 
+
+    '<div class="plugin_params_label">Default Use Template:</div>' + 
+				'<div class="plugin_params_content"><input type="text" id="fe_ec_notify_template" size="50" value="'+escape_text_field_value(cat.notify_template)+'" spellcheck="false">conf/emails</input></div>' + 
+
 				'<div class="plugin_params_label">Default Email on Success:</div>' + 
 				'<div class="plugin_params_content"><input type="text" id="fe_ec_notify_success" size="50" value="'+escape_text_field_value(cat.notify_success)+'" placeholder="email@sample.com" spellcheck="false" onChange="$P().update_add_remove_me($(this))"/><span class="link addme" onMouseUp="$P().add_remove_me($(this).prev())"></span></div>' + 
 				
@@ -447,6 +451,7 @@ Class.add( Page.Admin, {
 		category.max_children = parseInt( $('#fe_ec_max_children').val() );
 		category.notify_success = $('#fe_ec_notify_success').val();
 		category.notify_fail = $('#fe_ec_notify_fail').val();
+		category.notify_template = $('#fe_ec_notify_template').val();
 		category.web_hook = $('#fe_ec_web_hook').val();
 		
 		// cpu limit
