@@ -2,11 +2,11 @@
 # Fork Changes (from 0.8.56)
 
 - customize email template for event
-![TemplateEmail](images/Image2.png =250x250)
+![TemplateEmail](images/Image2.png| width=100)
 - delete job in History page
-![HistoryPage](images/Image3.png =250x250)
+![HistoryPage](images/Image3.png| width=100)
 - shell plugin set variable "description" putting echo "#description" before exit with status code
-![ShellPlugin](images/Image1.png =250x250)
+![ShellPlugin](images/Image1.png| width=100)
 
 # Overview
 
