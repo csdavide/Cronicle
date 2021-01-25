@@ -1,9 +1,9 @@
 
 # Fork Changes (from 0.8.56)
 
-- customize email template by event
+- customize email template for event
 - delete job in History page
-- shell plugin set variable "description" putting echo "#description" before exit with status
+- shell plugin set variable "description" putting echo "#description" before exit with status code
 
 # Overview
 
