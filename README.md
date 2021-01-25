@@ -5,7 +5,7 @@
 ![TemplateEmail](images/Image2.png)
 - delete job in History page
 ![HistoryPage](images/Image3.png)
-- shell plugin set variable "description" putting echo "#description" before exit with status code
+- shell plugin set variable "description" putting echo "#message" before exit with status code
 ![ShellPlugin](images/Image1.png)
 
 # Overview
